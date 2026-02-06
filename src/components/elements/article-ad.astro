@@ -19,7 +19,11 @@ function buildGroups(entries) {
     const key = m[1];
     const kind = m[2];
     const url =
-      typeof mod === "string" ? mod : mod && mod.default ? mod.default : p.split("?")[0];
+      typeof mod === "string"
+        ? mod
+        : mod && mod.default
+          ? mod.default
+          : p.split("?")[0];
     groups[key] = groups[key] || {};
     groups[key][kind] = url;
   }
