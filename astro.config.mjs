@@ -21,8 +21,8 @@ if (RUN_KEYSTATIC === "true") {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://brianmonroeTP.github.io',
-  base: '/news-test/',
+  site: SITE.url,
+  base: SITE.basePath,
   markdown: {
     remarkPlugins: [readingTime, modifiedTime],
   },
