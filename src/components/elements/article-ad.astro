@@ -5,7 +5,7 @@
 // Naming convention example: `banner1.desktop.svg`, `banner1.mobile.svg`
 const modules = Object.entries(
   import.meta.glob(
-    "/src/assets/images/article-ad/*.{png,jpg,jpeg,webp,avif,svg}",
+    "/src/assets/images/article-ad/*.{png,jpg,jpeg,webp,avif,svg}?url",
     { eager: true },
   ),
 );
@@ -13,12 +13,13 @@ const modules = Object.entries(
 function buildGroups(entries) {
   const groups = {};
   for (const [p, mod] of entries) {
-    const parts = p.split("/").pop();
+    const parts = p.split("/").pop().split("?")[0];
     const m = parts.match(/^(.*)\.(desktop|mobile)\.[^.]+$/);
     if (!m) continue;
     const key = m[1];
     const kind = m[2];
-    const url = mod && mod.default ? mod.default : p;
+    const url =
+      typeof mod === "string" ? mod : mod && mod.default ? mod.default : p.split("?")[0];
     groups[key] = groups[key] || {};
     groups[key][kind] = url;
   }
