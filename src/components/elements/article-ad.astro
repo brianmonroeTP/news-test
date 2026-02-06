@@ -4,13 +4,16 @@
 // - Randomly selects one `name` group on render and outputs a <picture> with desktop/mobile sources
 // Naming convention example: `banner1.desktop.svg`, `banner1.mobile.svg`
 const modules = Object.entries(
-  import.meta.glob('/src/assets/images/article-ad/*.{png,jpg,jpeg,webp,avif,svg}', { eager: true })
+  import.meta.glob(
+    "/src/assets/images/article-ad/*.{png,jpg,jpeg,webp,avif,svg}",
+    { eager: true },
+  ),
 );
 
 function buildGroups(entries) {
   const groups = {};
   for (const [p, mod] of entries) {
-    const parts = p.split('/').pop();
+    const parts = p.split("/").pop();
     const m = parts.match(/^(.*)\.(desktop|mobile)\.[^.]+$/);
     if (!m) continue;
     const key = m[1];
@@ -39,13 +42,23 @@ if (keys.length > 0) {
     role="region"
     aria-label="Advertisement"
   >
-    {chosen ? (
-      <picture>
-        {chosen.desktop ? <source srcset={chosen.desktop} media="(min-width: 1024px)" /> : null}
-        <img src={chosen.mobile ?? chosen.desktop} alt="Article ad" class="w-full h-full object-cover" />
-      </picture>
-    ) : (
-      <span class="text-sm text-base-content/70">Ad placeholder — replace with ad code</span>
-    )}
+    {
+      chosen ? (
+        <picture>
+          {chosen.desktop ? (
+            <source srcset={chosen.desktop} media="(min-width: 1024px)" />
+          ) : null}
+          <img
+            src={chosen.mobile ?? chosen.desktop}
+            alt="Article ad"
+            class="w-full h-full object-cover"
+          />
+        </picture>
+      ) : (
+        <span class="text-sm text-base-content/70">
+          Ad placeholder — replace with ad code
+        </span>
+      )
+    }
   </div>
 </div>
